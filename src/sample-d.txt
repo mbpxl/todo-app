@@ -1,0 +1,20 @@
+  // !let initTasks = [
+  //   {id: 1, title: "CSS", isDone: true},
+  //   {id: 2, title: "JS", isDone: true},
+  //   {id: 3, title: "Java", isDone: false},
+  //   {id: 4, title: "Redux", isDone: false},
+  // ];
+
+  let [tasks, setTasks] = useState([
+    {id: 1, title: "CSS", isDone: true},
+    {id: 2, title: "JS", isDone: true},
+    {id: 3, title: "Java", isDone: false},
+    {id: 4, title: "Redux", isDone: false},
+  ]);
+
+
+  // *Сравниваем id из массива initTasks (11 строка) каждого его элемента (объектов) с id элемента, по которому кликнули. Находим не совпадающий. 
+  function removeTask(id: number) {
+    let filteredTasks = tasks.filter((item) => item.id !== id); // ?===  task.filter((item) => { return item.id !== id }
+    setTasks(filteredTasks);
+  }

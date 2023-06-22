@@ -1,0 +1,18 @@
+
+Как создавать атрибуты (props) к тегам: (<TodoList heading="What to learn"/>)
+todo:
+0. Все данные, которые мы передаём в компопнент приходят в виде объекта: function TodoList(props: any) {} ==> props = {title: "What to learn"/""}
+todo:
+1. Описание типа к props (props: any => any). Создание своего типа.
+type PropsType = {
+  *title: string;
+}
+function TodoList(props: PropsType)
+
+
+
+
+props = {
+  title: "What to learn",
+  task: [ {id: 1, title: "CSS", isDone: true}, {id: 2, title: "JS", isDone: true}, {id: 3, title: "Java", isDone: false}, {id: 3, title: "Redux", isDone: false},]
+}
