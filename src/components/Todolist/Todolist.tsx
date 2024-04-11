@@ -12,6 +12,15 @@ type PropsType = {
 export const Todolist = (props: PropsType) => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
+  const onNewTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTaskTitle(e.currentTarget?.value);
+  };
+
+  const submitNewTask = () => {
+    props.addTask(newTaskTitle);
+    setNewTaskTitle("");
+  };
+
   return (
     <div className="">
       <h3>{props.title}</h3>
@@ -20,24 +29,14 @@ export const Todolist = (props: PropsType) => {
           type="text"
           placeholder="New task"
           value={newTaskTitle}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setNewTaskTitle(e.currentTarget?.value);
-          }}
+          onChange={onNewTaskChange}
           onKeyPress={(e) => {
             if (e.charCode === 13) {
-              props.addTask(newTaskTitle);
-              setNewTaskTitle("");
+              submitNewTask();
             }
           }}
         />
-        <button
-          onClick={() => {
-            props.addTask(newTaskTitle);
-            setNewTaskTitle("");
-          }}
-        >
-          +
-        </button>
+        <button onClick={submitNewTask}>+</button>
       </div>
       <ul>
         {props.tasks.map((t) => (
