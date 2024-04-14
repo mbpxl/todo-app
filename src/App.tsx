@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "./assets/style.scss";
-import { Todolist } from "./components/Todolist/Todolist";
+import { TaskType, Todolist } from "./components/Todolist/Todolist";
 import { v1 } from "uuid";
 
 export type FilterValuesTypes = "All" | "Completed" | "Active";
 
 const App = () => {
-  const [tasks, setTasks] = useState<
-    Array<{ id: string; title: string; isDone: boolean }>
-  >([
+  const [tasks, setTasks] = useState<Array<TaskType>>([
     { id: v1(), title: "CSS", isDone: true },
     { id: v1(), title: "React", isDone: true },
     { id: v1(), title: "Vue", isDone: false },
@@ -30,6 +28,15 @@ const App = () => {
     setFilter(value);
   };
 
+  const changeIsDoneStatus = (taskId: string, isDone: boolean) => {
+    let taskToChangeStatus = tasks.find((t) => t.id === taskId);
+    if (taskToChangeStatus) {
+      taskToChangeStatus.isDone = isDone;
+    }
+    let copyTasks = [...tasks];
+    setTasks(copyTasks);
+  };
+
   const addTask = (newTitle: string) => {
     let newTask = { id: v1(), title: newTitle, isDone: false };
     let distTasks = [newTask, ...tasks];
@@ -44,6 +51,8 @@ const App = () => {
         removeTask={removeTask}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeIsDoneStatus={changeIsDoneStatus}
+        filter={filter}
       />
     </div>
   );
