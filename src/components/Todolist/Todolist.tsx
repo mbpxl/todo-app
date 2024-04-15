@@ -8,13 +8,19 @@ export type TaskType = {
 };
 
 type PropsType = {
+  id: string;
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (id: string) => void;
-  changeFilter: (value: FilterValuesTypes) => void;
-  addTask: (newTitle: string) => void;
-  changeIsDoneStatus: (taskId: string, isDone: boolean) => void;
+  removeTask: (id: string, todolistId: string) => void;
+  changeFilter: (value: FilterValuesTypes, todolistId: string) => void;
+  addTask: (newTitle: string, todolistId: string) => void;
+  changeIsDoneStatus: (
+    taskId: string,
+    isDone: boolean,
+    todolistId: string
+  ) => void;
   filter: FilterValuesTypes;
+  removeTodoList: (todolistId: string) => void;
 };
 
 export const Todolist = (props: PropsType) => {
@@ -31,14 +37,19 @@ export const Todolist = (props: PropsType) => {
       setError(true);
       return;
     }
-    props.addTask(newTaskTitle.trim());
+    props.addTask(newTaskTitle.trim(), props.id);
     setNewTaskTitle("");
     setError(false);
+  };
+
+  const removeTodoList = () => {
+    props.removeTodoList(props.id);
   };
 
   return (
     <div className="">
       <h3>{props.title}</h3>
+      <button onClick={removeTodoList}>X</button>
       <div className="">
         <input
           className={error ? "error" : ""}
@@ -62,13 +73,17 @@ export const Todolist = (props: PropsType) => {
               type="checkbox"
               checked={t.isDone}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                props.changeIsDoneStatus(t.id, e.currentTarget.checked);
+                props.changeIsDoneStatus(
+                  t.id,
+                  e.currentTarget.checked,
+                  props.id
+                );
               }}
             />
             <span>{t.title}</span>
             <button
               onClick={() => {
-                props.removeTask(t.id);
+                props.removeTask(t.id, props.id);
               }}
             >
               X
@@ -80,7 +95,7 @@ export const Todolist = (props: PropsType) => {
         <button
           className={props.filter === "All" ? "active-filter" : ""}
           onClick={() => {
-            props.changeFilter("All");
+            props.changeFilter("All", props.id);
           }}
         >
           All
@@ -88,7 +103,7 @@ export const Todolist = (props: PropsType) => {
         <button
           className={props.filter === "Active" ? "active-filter" : ""}
           onClick={() => {
-            props.changeFilter("Active");
+            props.changeFilter("Active", props.id);
           }}
         >
           Active
@@ -96,7 +111,7 @@ export const Todolist = (props: PropsType) => {
         <button
           className={props.filter === "Completed" ? "active-filter" : ""}
           onClick={() => {
-            props.changeFilter("Completed");
+            props.changeFilter("Completed", props.id);
           }}
         >
           Completed
