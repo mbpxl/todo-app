@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./assets/style.scss";
 import { TaskType, Todolist } from "./components/Todolist/Todolist";
 import { v1 } from "uuid";
-import { AddItemForm } from "./components/Todolist/AddItemForm/AddItemForm";
+import { AddItemForm } from "./components/AddItemForm/AddItemForm";
 
 export type FilterValuesTypes = "All" | "Completed" | "Active";
 export type TodoListTypes = {
@@ -60,10 +60,26 @@ const App = () => {
     isDone: boolean,
     todolistId: string
   ) => {
+    //достаём нужный массив по *todolistId*
+    let tasks = tasksObj[todolistId];
+    //найдём нужную таску
+    let taskToChangeStatus = tasks.find((t) => t.id === taskId);
+    //изменим таску если она нашлась
+    if (taskToChangeStatus) {
+      taskToChangeStatus.isDone = isDone;
+      setTasks({ ...tasksObj });
+    }
+  };
+
+  const changeTaskTitle = (
+    taskId: string,
+    newTitle: string,
+    todolistId: string
+  ) => {
     let tasks = tasksObj[todolistId];
     let taskToChangeStatus = tasks.find((t) => t.id === taskId);
     if (taskToChangeStatus) {
-      taskToChangeStatus.isDone = isDone;
+      taskToChangeStatus.title = newTitle;
       setTasks({ ...tasksObj });
     }
   };
@@ -93,6 +109,14 @@ const App = () => {
     setTasks({ ...tasksObj, [todoList.id]: [] });
   };
 
+  const changeTodolistTitle = (todoListId: string, newTitle: string) => {
+    const currentTodolist = todolists.find((tl) => tl.id === todoListId);
+    if (currentTodolist) {
+      currentTodolist.title = newTitle;
+      setTodolists([...todolists]);
+    }
+  };
+
   return (
     <div className="">
       <AddItemForm addItem={addTodoList} placeholderTitle={"New todolist"} />
@@ -116,6 +140,8 @@ const App = () => {
               changeIsDoneStatus={changeIsDoneStatus}
               filter={t.filter}
               removeTodoList={removeTodoList}
+              changeTaskTitle={changeTaskTitle}
+              changeTodolistTitle={changeTodolistTitle}
             />
           );
         })}
