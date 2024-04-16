@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FilterValuesTypes } from "../../App";
+import { AddItemForm } from "./AddItemForm/AddItemForm";
 
 export type TaskType = {
   id: string;
@@ -24,48 +25,19 @@ type PropsType = {
 };
 
 export const Todolist = (props: PropsType) => {
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-
-  const [error, setError] = useState(false);
-
-  const onNewTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.currentTarget?.value);
-  };
-
-  const submitNewTask = () => {
-    if (newTaskTitle.trim() === "") {
-      setError(true);
-      return;
-    }
-    props.addTask(newTaskTitle.trim(), props.id);
-    setNewTaskTitle("");
-    setError(false);
-  };
-
   const removeTodoList = () => {
     props.removeTodoList(props.id);
+  };
+
+  const addTask = (title: string) => {
+    props.addTask(title, props.id);
   };
 
   return (
     <div className="">
       <h3>{props.title}</h3>
       <button onClick={removeTodoList}>X</button>
-      <div className="">
-        <input
-          className={error ? "error" : ""}
-          type="text"
-          placeholder="New task"
-          value={newTaskTitle}
-          onChange={onNewTaskChange}
-          onKeyPress={(e) => {
-            if (e.charCode === 13) {
-              submitNewTask();
-            }
-          }}
-        />
-        <button onClick={submitNewTask}>+</button>
-        {error && <div className="error-message">Fuild is required</div>}
-      </div>
+      <AddItemForm addItem={addTask} placeholderTitle={"New task"} />
       <ul>
         {props.tasks.map((t) => (
           <li key={t.id}>
