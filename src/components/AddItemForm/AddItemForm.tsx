@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AddItemFormTypes } from "./AddItemFormTypes";
+import { Button, TextField } from "@mui/material";
 
 export const AddItemForm = (props: AddItemFormTypes) => {
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -22,20 +23,18 @@ export const AddItemForm = (props: AddItemFormTypes) => {
 
   return (
     <div className="">
-      <input
-        className={error ? "error" : ""}
-        type="text"
-        placeholder={props.placeholderTitle}
-        value={newTaskTitle}
+      <TextField
+        error={!!error}
+        helperText={error}
+        id="standard-basic"
+        label={props.placeholderTitle}
+        variant="standard"
+        defaultValue={newTaskTitle}
         onChange={onNewTaskChange}
-        onKeyPress={(e) => {
-          if (e.charCode === 13) {
-            submitNewTask();
-          }
-        }}
       />
-      <button onClick={submitNewTask}>+</button>
-      {error && <div className="error-message">Fuild is required</div>}
+      <Button variant="contained" onClick={submitNewTask}>
+        +
+      </Button>
     </div>
   );
 };
