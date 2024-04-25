@@ -13,7 +13,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import { Menu, MenuBook } from "@mui/icons-material";
 
 export type FilterValuesTypes = "All" | "Completed" | "Active";
 export type TodoListTypes = {
@@ -22,7 +22,7 @@ export type TodoListTypes = {
   filter: FilterValuesTypes;
 };
 
-type TasksStateType = {
+export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 
