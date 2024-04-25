@@ -17,7 +17,7 @@ export const AddItemForm = (props: AddItemFormTypes) => {
       return;
     }
     props.addItem(newTaskTitle.trim());
-    setNewTaskTitle("");
+    setNewTaskTitle(" ");
     setError(false);
   };
 
