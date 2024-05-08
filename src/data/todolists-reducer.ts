@@ -30,8 +30,6 @@ export let todoListId1 = v1();
 export let todoListId2 = v1();
 
 const initialState: Array<TodoListTypes> = [
-  {id: todoListId1, title: "What to learn", filter: "All"},
-  {id: todoListId2, title: "What to buy", filter: "All"},
 ];
 
 export const todoListReducer = (state: Array<TodoListTypes> = initialState, action: ActionUnionType): Array<TodoListTypes> => {

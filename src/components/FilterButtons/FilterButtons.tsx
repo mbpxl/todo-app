@@ -1,13 +1,29 @@
 import { Button } from "@mui/material";
 import { FilterButtonsTypes } from "./FilterButtonsTypes";
+import React, { useCallback } from "react";
+import { FilterValuesTypes } from "../../App";
+import { changeTodoListFilterAC } from "../../data/todolists-reducer";
+import { useDispatch } from "react-redux";
 
-export const FilterButtons = (props: FilterButtonsTypes) => {
+export const FilterButtons = React.memo((props: FilterButtonsTypes) => {
+  //! =====================================REDUX TOOLS=====================================
+  const dispatch = useDispatch();
+  //! =====================================REDUX TOOLS=====================================
+
+  //* callback for change filter position in current component
+  const changeFilter = useCallback(
+    (todolistId: string, value: FilterValuesTypes) => {
+      dispatch(changeTodoListFilterAC(todolistId, value));
+    },
+    [dispatch]
+  );
+
   return (
     <div className="">
       <Button
         variant={props.filter === "All" ? "contained" : "text"}
         onClick={() => {
-          props.changeFilter(props.id, "All");
+          changeFilter(props.id, "All");
         }}
       >
         All
@@ -15,7 +31,7 @@ export const FilterButtons = (props: FilterButtonsTypes) => {
       <Button
         variant={props.filter === "Active" ? "contained" : "text"}
         onClick={() => {
-          props.changeFilter(props.id, "Active");
+          changeFilter(props.id, "Active");
         }}
       >
         Active
@@ -24,11 +40,11 @@ export const FilterButtons = (props: FilterButtonsTypes) => {
         color={"secondary"}
         variant={props.filter === "Completed" ? "contained" : "text"}
         onClick={() => {
-          props.changeFilter(props.id, "Completed");
+          changeFilter(props.id, "Completed");
         }}
       >
         Completed
       </Button>
     </div>
   );
-};
+});
