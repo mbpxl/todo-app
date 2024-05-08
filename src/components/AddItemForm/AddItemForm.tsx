@@ -3,22 +3,21 @@ import { AddItemFormTypes } from "./AddItemFormTypes";
 import { Button, TextField } from "@mui/material";
 
 export const AddItemForm = (props: AddItemFormTypes) => {
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
 
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const onNewTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget?.value);
   };
 
   const submitNewTask = () => {
-    if (newTaskTitle.trim() === "") {
-      setError(true);
-      return;
+    if (newTaskTitle.trim() !== "") {
+      props.addItem(newTaskTitle);
+      setNewTaskTitle("");
+    } else {
+      setError("Title is required!");
     }
-    props.addItem(newTaskTitle.trim());
-    setNewTaskTitle(" ");
-    setError(false);
   };
 
   return (

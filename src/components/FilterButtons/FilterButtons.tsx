@@ -7,7 +7,7 @@ export const FilterButtons = (props: FilterButtonsTypes) => {
       <Button
         variant={props.filter === "All" ? "contained" : "text"}
         onClick={() => {
-          props.changeFilter("All", props.id);
+          props.changeFilter(props.id, "All");
         }}
       >
         All
@@ -15,7 +15,7 @@ export const FilterButtons = (props: FilterButtonsTypes) => {
       <Button
         variant={props.filter === "Active" ? "contained" : "text"}
         onClick={() => {
-          props.changeFilter("Active", props.id);
+          props.changeFilter(props.id, "Active");
         }}
       >
         Active
@@ -24,7 +24,7 @@ export const FilterButtons = (props: FilterButtonsTypes) => {
         color={"secondary"}
         variant={props.filter === "Completed" ? "contained" : "text"}
         onClick={() => {
-          props.changeFilter("Completed", props.id);
+          props.changeFilter(props.id, "Completed");
         }}
       >
         Completed

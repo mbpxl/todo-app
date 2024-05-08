@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { FilterValuesTypes } from "../../App";
 import { AddItemForm } from "../AddItemForm/AddItemForm";
 import { EditableSpan } from "../EditableSpan/EditableSpan";
-import { Button, IconButton } from "@mui/material";
-import { CheckBox, Delete } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 import { FilterButtons } from "../FilterButtons/FilterButtons";
+import { FilterValuesTypes } from "../../App";
 
 export type TaskType = {
   id: string;
@@ -17,12 +16,12 @@ type PropsType = {
   title: string;
   tasks: Array<TaskType>;
   removeTask: (id: string, todolistId: string) => void;
-  changeFilter: (value: FilterValuesTypes, todolistId: string) => void;
+  changeFilter: (todolistId: string, value: FilterValuesTypes) => void;
   addTask: (newTitle: string, todolistId: string) => void;
   changeIsDoneStatus: (
     taskId: string,
-    isDone: boolean,
-    todolistId: string
+    todolistId: string,
+    isDone: boolean
   ) => void;
   filter: FilterValuesTypes;
   removeTodoList: (todolistId: string) => void;
@@ -35,6 +34,8 @@ type PropsType = {
 };
 
 export const Todolist = (props: PropsType) => {
+  console.log("todolists: ", props.id, props.tasks);
+
   const removeTodoList = () => {
     props.removeTodoList(props.id);
   };
@@ -43,7 +44,7 @@ export const Todolist = (props: PropsType) => {
     props.addTask(title, props.id);
   };
 
-  const changeTodolistTitle = (newTitle: string) => {
+  const onChangeTodolistTitle = (newTitle: string) => {
     props.changeTodolistTitle(props.id, newTitle);
   };
 
@@ -53,7 +54,7 @@ export const Todolist = (props: PropsType) => {
         <h3>
           <EditableSpan
             title={props.title}
-            onChangeTitle={changeTodolistTitle}
+            onChangeTitle={onChangeTodolistTitle}
           />
         </h3>
         <IconButton onClick={removeTodoList}>
@@ -64,13 +65,13 @@ export const Todolist = (props: PropsType) => {
       <ul>
         {props.tasks.map((t) => {
           const onChangeTitle = (newValue: string) => {
-            props.changeTaskTitle(t.id, newValue, props.id);
+            props.changeTaskTitle(t.id, props.id, newValue);
           };
 
           const changeCheckedState = (
             e: React.ChangeEvent<HTMLInputElement>
           ) => {
-            props.changeIsDoneStatus(t.id, e.currentTarget.checked, props.id);
+            props.changeIsDoneStatus(t.id, props.id, e.currentTarget.checked);
           };
           return (
             <li key={t.id}>
@@ -80,7 +81,6 @@ export const Todolist = (props: PropsType) => {
                 onChange={changeCheckedState}
               />
               <EditableSpan title={t.title} onChangeTitle={onChangeTitle} />
-
               <IconButton
                 onClick={() => {
                   props.removeTask(t.id, props.id);
