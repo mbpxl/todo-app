@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { EditableSpanType } from "./EditableSpanType";
+import React from "react";
 
-export const EditableSpan = (props: EditableSpanType) => {
+export const EditableSpan = React.memo((props: EditableSpanType) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const activateEditMode = () => {
@@ -13,7 +14,7 @@ export const EditableSpan = (props: EditableSpanType) => {
     setEditMode(false);
   };
 
-  const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget?.value);
     props.onChangeTitle(e.currentTarget?.value);
   };
@@ -22,11 +23,11 @@ export const EditableSpan = (props: EditableSpanType) => {
     <input
       type="text"
       value={title}
-      onChange={onTitleChange}
+      onChange={onChangeTitle}
       onBlur={activateViewMode}
       autoFocus={true}
     />
   ) : (
     <span onDoubleClick={activateEditMode}>{props.title}</span>
   );
-};
+});
