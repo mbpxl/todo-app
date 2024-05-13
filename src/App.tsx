@@ -82,7 +82,7 @@ const App = React.memo(() => {
                 <Paper style={{ padding: "10px" }}>
                   <Todolist
                     key={t.id}
-                    id={t.id}
+                    todoListId={t.id}
                     title={t.title}
                     tasks={tasksForTodoList}
                     filter={t.filter}
