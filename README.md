@@ -1,3 +1,29 @@
+# `TODO APP`
+
+## :writing_hand: Description :writing_hand:
+Todo App is a web application for scheduling tasks
+
+## :gear: Technologies used: :gear:
+* **React**
+* **JavaScript (TypeScript)**
+* **Redux**
+* **React-redux**
+* **React hooks**
+* Unit tests
+* Storybook (testing)
+* Material UI
+* Prettier
+
+
+## :airplane: App features :airplane:
+- [x] Adding a new todolist
+- [x] Adding a new task
+- [x] Editing the title (Todolist or task)
+- [x] Removing (Todolist or title)
+- [x] Filtering tasks by execution status
+
+--------------------------------------------------------------------------------------------------
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
